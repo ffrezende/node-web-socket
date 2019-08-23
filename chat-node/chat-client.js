@@ -1,25 +1,46 @@
 const socket = require('socket.io-client')('http://localhost:3000');
 const repl = require('repl');
 const chalk = require('chalk');
+const readline = require('readline');
 let username = '';
 
-socket.on('disconnect', () => {
-  socket.emit('disconnect');
+const input = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
 });
 
-socket.on('connect', () => {
-  console.log(chalk.red('=== start chatting ==='));
-  username = process.argv[2];
-});
+const perguntar = pergunta =>
+  new Promise(resolver =>
+    input.question(pergunta, resposta => {
+      resolver(resposta);
+      input.close();
+    })
+  );
 
-socket.on('message', data => {
-  const { cmd, username } = data;
-  console.log(chalk.green(username + ': ' + cmd.split('\n')[0]));
-});
+WebSocket = () => {
+  socket.on('disconnect', () => {
+    socket.emit('disconnect');
+  });
 
-repl.start({
-  prompt: '',
-  eval: cmd => {
-    socket.send({ cmd, username });
-  }
-});
+  socket.on('connect', async () => {
+    console.log(chalk.red('=== start chatting ==='));
+    username = await perguntar('Digite seu nick: ');
+    await readInput();
+  });
+
+  socket.on('message', data => {
+    const { cmd, username } = data;
+    console.log(chalk.green(username + ': ' + cmd.split('\n')[0]));
+  });
+};
+
+readInput = async () => {
+  repl.start({
+    prompt: '',
+    eval: cmd => {
+      socket.send({ cmd, username });
+    }
+  });
+};
+
+WebSocket();
