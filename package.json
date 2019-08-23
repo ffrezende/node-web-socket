@@ -1,0 +1,26 @@
+{
+  "name": "node-web-socket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffrezende/node-web-socket.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ffrezende/node-web-socket/issues"
+  },
+  "homepage": "https://github.com/ffrezende/node-web-socket#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "repl": "^0.1.3",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
+  }
+}
