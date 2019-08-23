@@ -9,7 +9,7 @@ const input = readline.createInterface({
   output: process.stdout
 });
 
-const perguntar = pergunta =>
+perguntar = pergunta =>
   new Promise(resolver =>
     input.question(pergunta, resposta => {
       resolver(resposta);
